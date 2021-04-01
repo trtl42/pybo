@@ -8,7 +8,7 @@ class Question(models.Model):
     create_Date = models.DateTimeField()
 
 class Answer(models.Model):
-    question = models.ForeignKey(Question, on_delete_models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
     content = models.TextField()
     create_Date = models.DateTimeField()
 
