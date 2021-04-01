@@ -1,3 +1,14 @@
 from django.db import models
 
 # Create your models here.
+
+class Question(models.Model):
+    subject = models.CharField(max_length=200)
+    content = models.TextField()
+    create_Date = models.DateTimeField()
+
+class Answer(models.Model):
+    question = models.ForeignKey(Question, on_delete_models.CASCADE)
+    content = models.TextField()
+    create_Date = models.DateTimeField()
+
