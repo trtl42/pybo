@@ -11,4 +11,4 @@ nohup.out
 *.iml
 /.idea
 settings.py
-/migrations
+pybo/migrations
