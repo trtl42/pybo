@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
@@ -31,6 +32,7 @@ def detail(request, question_id):
     context = {'question': question}
     return render(request, 'pybo/question_detail.html', context)
 
+@login_required(login_url='common:login')
 def answer_create(request, question_id):
     """
     pybo 답변등록
@@ -42,6 +44,7 @@ def answer_create(request, question_id):
             answer = form.save(commit=False)
             answer.create_date = timezone.now()
             answer.question = question
+            answer.author = request.user
             answer.save()
             return redirect('pybo:detail', question_id=question.id)
     else:
@@ -49,6 +52,7 @@ def answer_create(request, question_id):
     context = {'question': question, 'form': form}
     return render(request, 'pybo/question_detail.html', context)
 
+@login_required(login_url='common:login')
 def question_create(request):
     """
     pybo 질문등록
@@ -58,6 +62,7 @@ def question_create(request):
         if form.is_valid():
             question = form.save(commit=False)
             question.create_date = timezone.now()
+            question.author = request.user
             question.save()
             return redirect('pybo:index')
     else:
